@@ -7,6 +7,7 @@ import torch
 from torch import nn
 import torchvision
 
+from .MV_Emotion import BaseEncoder
 from ..net_2d import mobilenet
 
 

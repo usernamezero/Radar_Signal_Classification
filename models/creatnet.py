@@ -4,7 +4,7 @@ from torch import nn
 from torch.autograd import Variable
 import torchvision
 from .net_1d import cnn_1d,lstm,resnet_1d,multi_scale_resnet_1d,micro_multi_scale_resnet_1d,mlp
-from .net_2d import densenet,dfcnn,resnet,squeezenet,multi_scale_resnet,mobilenet,lightcnn
+from .net_2d import densenet,dfcnn,resnet,resnetse,squeezenet,multi_scale_resnet,mobilenet,lightcnn
 from .ipmc import EarID,MV_Emotion
 from .autoencoder import autoencoder
 from .domain import dann,dann_base
@@ -70,7 +70,17 @@ def creatnet(opt):
             net = resnet.resnet18(pretrained=True)
             net.fc = nn.Linear(512, opt.label)
         net.conv1 = nn.Conv2d(opt.input_nc, 64, 7, 2, 3, bias=False)        
-    
+
+    # resnetse 整体不使用预训练
+    elif name in ['resnet18_se', 'resnet34_se', 'resnet50_se']:
+        if name == 'resnet18_se':
+            net = resnetse.resnet18_se()
+        elif name == 'resnet34_se':
+            net = resnetse.resnet34_se()
+        elif name == 'resnet50_se':
+            net = resnetse.resnet50_se()
+        net.conv1 = nn.Conv2d(opt.input_nc, 64, 7, 2, 3, bias=False)
+
     elif 'densenet' in name:
         if name =='densenet121':
             net = densenet.densenet121(pretrained=False,num_classes = opt.label)
