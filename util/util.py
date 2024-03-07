@@ -8,14 +8,14 @@ from tensorboardX import SummaryWriter
 def randomstr(num):
     return ''.join(random.sample(string.ascii_letters + string.digits, num))
 
-# def writelog(log,opt,printflag = False, tensorboard = False):
-#     f = open(os.path.join(opt.save_dir,"log.txt"),'a+')
-#     f.write(log+'\n')
-#     if printflag:
-#         print(log)
-#     if tensorboard:
-#         log = log.replace('\n', '  \n')
-#         opt.TBGlobalWriter.add_text('Log', log)
+def writelog(log,opt,printflag = False, tensorboard = False):
+    f = open(os.path.join(opt.save_dir,"log.txt"),'a+')
+    f.write(log+'\n')
+    if printflag:
+        print(log)
+    if tensorboard:
+        log = log.replace('\n', '  \n')
+        opt.TBGlobalWriter.add_text('Log', log)
 
 def makedirs(path):
     if os.path.isdir(path):
@@ -24,11 +24,11 @@ def makedirs(path):
         os.makedirs(path)
         print('makedir:',path)
 
-# def loadtxt(path):
-#     f = open(path, 'r')
-#     txt_data = f.read()
-#     f.close()
-#     return txt_data
+def loadtxt(path):
+    f = open(path, 'r')
+    txt_data = f.read()
+    f.close()
+    return txt_data
 
 def savetxt(file,path):
     wf = open(path,'w')

@@ -8,7 +8,7 @@ def interp(y, length):
 
 def pad(data,padding,mod='zero'):
     if mod == 'zero':
-        pad_data = np.zeros(padding, dtype=data.dtype)
+        pad_data = np.zeros(padding, dtype = data.dtype)
         return np.append(data, pad_data)
     
     elif mod == 'repeat':
@@ -29,7 +29,7 @@ def pad(data,padding,mod='zero'):
         else:
             return pad(out_data,padding-length,mod='reflect')
 
-# 数据标准化，
+
 def normliaze(data, mode = 'z-score', sigma = 0, dtype=np.float32, truncated = 1e2):
     '''
     mode: norm | z-score | maxmin | 5_95
@@ -39,18 +39,12 @@ def normliaze(data, mode = 'z-score', sigma = 0, dtype=np.float32, truncated = 1
     data_calculate = data.copy()
     if mode == 'norm':
         result = (data-np.mean(data_calculate))/sigma
-    # Z-Score通过（x-μ）/σ将两组或多组数据转化为无单位的Z-Score分值，
-    # 使得数据标准统一化，提高了数据可比性，削弱了数据解释性
     elif mode == 'z-score':
         mu = np.mean(data_calculate)
-        sigma = np.std(data_calculate)  # 标准差
+        sigma = np.std(data_calculate)
         result = (data - mu) / sigma
-    # 线性归一化，最数据进行线性变换，使得结果值映射到[0,1]之间，这种归一化比较适用在数值较集中的情况。
-    # 但是这种方法有一个缺陷，就是如果max和min不稳定的时候，
-    # 很容易使得归一化的结果不稳定，易受极值影响，影响后续使用效果。所以在实际应用中，我们一般用经验常量来替代max和min
     elif mode == 'maxmin':
         result = (data-np.mean(data_calculate))/(max(np.max(data_calculate),np.abs(np.min(data_calculate))))
-    # 未知方法，后续在详细了解
     elif mode == '5_95':
         data_sort = np.sort(data_calculate,axis=None)
         th5 = data_sort[int(0.05*len(data_sort))]
@@ -60,7 +54,7 @@ def normliaze(data, mode = 'z-score', sigma = 0, dtype=np.float32, truncated = 1
         if sigma == 0:
             sigma = 1e-06
         result = (data-baseline)/sigma
-    # 裁剪结果，使其值限制在(-truncated), (truncated)之间
+
     if truncated > 1:
         result = np.clip(result, (-truncated), (truncated))
 
