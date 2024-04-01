@@ -203,7 +203,3 @@ def resnet101_se(**kwargs):
 def resnet152_se(**kwargs):
     model = ResNetSE(Bottleneck, [3, 8, 36, 3], **kwargs)
     return model
-
-
-# resnet50se = resnet50_se()
-# print(resnet50se)

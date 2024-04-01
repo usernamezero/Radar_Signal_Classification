@@ -13,7 +13,7 @@ plt.style.use("fivethirtyeight")
 sns.set_style({'font.sans-serif': ['SimHei', 'Arial']})  # 设定汉字字体，防止出现方框
 
 # 数据路径
-data_path = r"../data/ML/SNR1/data.csv"
+data_path = r"../dataset/ML/SNR1/data.csv"
 data = pd.read_csv(data_path)
 # 数据处理，获取数据集的SNR及label列表，同时在训练数据中丢弃他们
 SNR = data.SNR[0]
