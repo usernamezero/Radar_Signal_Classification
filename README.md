@@ -1,5 +1,5 @@
 <div align="center">    
-<img src="./imgs/compare.png " alt="image" style="zoom:100%;" />
+
 </div>
 
 # Radar_Signal_Classification
