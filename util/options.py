@@ -26,7 +26,7 @@ class Options():
         self.parser.add_argument('--mode', type=str, default='auto',help='classify_1d | classify_2d | autoencoder | domain')
         self.parser.add_argument('--domain_num', type=str, default='2',
             help='number of domain, only available when mode==domain. 2 | auto ,if input 2, train-data is domain 0,test-data is domain 1.')
-        self.parser.add_argument('--dataset_dir', type=str, default='./datasets/simple_test',help='your dataset path')
+        self.parser.add_argument('--dataset_dir', type=str, default='./datasets/signal',help='your dataset path')
         self.parser.add_argument('--save_dir', type=str, default='./checkpoints/',help='save checkpoints')
         self.parser.add_argument('--tensorboard', type=str, default='./checkpoints/tensorboardX',help='tensorboardX log dir')
         self.parser.add_argument('--TBGlobalWriter', type=str, default='',help='')

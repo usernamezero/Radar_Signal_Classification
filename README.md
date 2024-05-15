@@ -85,9 +85,9 @@ python3 train.py --label 50 --input_nc 1 --dataset_dir ./datasets/simple_test --
 ```python
 #1.type:numpydata   signals:np.float64   labels:np.int64
 #2.shape  signals:[num,ch,length]    labels:[num]
-#num:samples_num, ch :channel_num,  length:length of each sample
+#num:batch_size, ch :channel_num,  length:length of siganl
 #for example:
-signals = np.zeros((10,1,10),dtype='np.float64')
+signals = np.zeros((10,1,3000),dtype='np.float64')
 labels = np.array([0,0,0,0,0,1,1,1,1,1])      #0->class0    1->class1
 ```
 * step2: 新增参数  ```--dataset_dir "your_dataset_dir"``` 
@@ -99,6 +99,50 @@ labels = np.array([0,0,0,0,0,1,1,1,1,1])      #0->class0    1->class1
 python3 simple_test.py --label 50 --input_nc 1 --model_name micro_multi_scale_resnet_1d --gpu_id 0
 # 如果需要使用cpu进行训练, 请输入 --gpu_id -1
 ```
+### how to load results
+Use```torch.load(path)```to load results.pth<br>
+Just like a Dict.<br>
+
+```python
+    results:{
+        0:{                                    #dict,index->fold
+            'F1':[0.1,0.2...],                 #list,index->epoch
+            'err':[0.9,0.8...],                #list,index->epoch
+            'loss':[1.1,1.0...],               #list,index->epoch
+            'confusion_mat':[
+                [[1204  133  763  280]
+                 [ 464  150  477  152]
+                 [ 768   66 1276  308]
+                 [ 159   23  293 2145]],
+                 [[2505  251 1322  667]
+                 [1010  283  834  353]
+                 [1476  174 2448  766]
+                 [ 376   46  446 4365]],
+                 ......
+            ],                                 #list,index->epoch
+            'eval_detail':[                    #list,index->epoch
+                {
+                    'sequences':[],
+                    'ture_labels':[],
+                    'pre_labels':[]
+                },
+                {
+                    'sequences':[],
+                    'ture_labels':[],
+                    'pre_labels':[]
+                }
+                ...
+            ], 
+            'best_epoch':0                     #int
+        }
+        1:{
+
+        ...
+
+        }
+    }
+```
+
 
 
 ### [ More options](./util/options.py).

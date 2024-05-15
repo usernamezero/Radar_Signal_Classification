@@ -106,7 +106,7 @@ class Core(object):
             self.opt.TBGlobalWriter.add_scalar('RemainTime', remain / 3600, self.fold * self.opt.epochs + self.epoch)
 
     def preprocess(self, signals, labels, sequences, queue):
-        for i in range(np.ceil(len(sequences) / self.opt.batchsize).astype(np.int)):
+        for i in range(np.ceil(len(sequences) / self.opt.batchsize).astype(np.int64)):
             signal, label = transforms.batch_generator(signals, labels,
                                                        sequences[i * self.opt.batchsize:(i + 1) * self.opt.batchsize])
             signal = transforms.ToInputShape(self.opt, signal, test_flag=self.test_flag)
@@ -171,7 +171,7 @@ class Core(object):
         if len(sequences) % self.opt.batchsize == 1:  # drop_last=True when last batchsize =1
             sequences = sequences[:self.opt.batchsize * (len(sequences) // self.opt.batchsize)]
         self.load_pool_init(signals, labels, sequences)
-        self.epoch_iter_length = np.ceil(len(sequences) / self.opt.batchsize).astype(np.int)
+        self.epoch_iter_length = np.ceil(len(sequences) / self.opt.batchsize).astype(np.int64)
 
     def forward(self, signal, label):
         if self.opt.mode == 'autoencoder':
@@ -182,7 +182,7 @@ class Core(object):
             for i in range(self.opt.batchsize):
                 self.features.append(np.concatenate((feature[i], [label[i]])))
 
-        elif self.opt.mode in ['classify_1d', 'classify_2d', 'domain']:
+        elif self.opt.mode in ['classify_1d', 'classify_2d', 'domain','transformers']:
             if self.opt.model_name in ['dann', 'dann_base']:
                 out, _ = self.net(signal, 0)
                 loss = self.loss_dann_c(out, label)
